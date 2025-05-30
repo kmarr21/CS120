@@ -1,355 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Brief 'About Me' Page for CS120!">
     <meta name="author" content="Kiersten Marr">
     <title>About Me</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* headings */
-        h1, h2 {
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        p {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        /* list styling */
-        .pet-names-container {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0;
-        }
-
-        .pet-names-list {
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            max-width: 400px;
-        }
-
-        .pet-names-list li {
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        /* fav food section w/ background image */
-        .food-section {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .food-image {
-            width: 200px;
-            height: 150px;
-            background-image: url('a1_images/overnight_oats.jpg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-
-        .food-text {
-            flex: 1;
-        }
-
-        /* table styling w/ alternating row colors */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        tr:nth-child(odd) {
-            background-color: white;
-        }
-
-        /* form styling */
-        .guestbook-form {
-            background-color: #f8f9fa;
-            padding: 30px;
-            border-radius: 8px;
-            margin: 40px 0;
-            border: 1px solid #ddd;
-        }
-
-        .form-table {
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .form-table td {
-            padding: 10px;
-            border: none;
-            background: none;
-        }
-
-        .form-table label {
-            text-align: right;
-            font-weight: 500;
-            color: #333;
-            padding-right: 15px;
-        }
-
-        .form-table input,
-        .form-table select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-table input:focus,
-        .form-table select:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
-        }
-
-        .submit-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            margin-top: 15px;
-        }
-
-        .submit-btn:hover {
-            background-color: #2980b9;
-        }
-
-        /* social media icons (just used formatted letters instead of icon images since I saw a website do it and it looked nicer) */
-        .social-icons {
-            position: fixed;
-            top: 100px;
-            right: 35px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 1000;
-        }
-
-        .social-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .social-icon.facebook {
-            background-color: #1877f2;
-        }
-
-        .social-icon.twitter {
-            background-color: #1da1f2;
-        }
-
-        .social-icon:hover {
-            transform: scale(1.1);
-        }
-
-        /* RESPONSIVE design (this took quite a bit of trial and error using Inspect!) */
+    <style type="text/css">
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: "Gill Sans", Helvetica, Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 1200px; margin: 0 auto;}
+        h1, h2 {color: #2c3e50; margin-bottom: 30px;}
+        h1 {font-size: 2.5rem; font-weight: 700;}
+        h2 {font-size: 1.8rem; font-weight: 600;}
+        p {margin-bottom: 20px; color: #333;}
+        .pet-names-container {display: flex; justify-content: center; margin: 30px 0;}
+        .pet-names-list {border: 2px solid #3498db; border-radius: 8px; padding: 20px; background-color: #f8f9fa; max-width: 400px;}
+        .pet-names-list li {margin-bottom: 10px; color: #333;}
+        .food-section {display: flex; align-items: flex-start; gap: 20px; margin: 30px 0;}
+        .food-image {width: 200px; height: 150px; background-image: url('a1_images/overnight_oats.jpg'); background-size: cover; background-position: center; border-radius: 8px; flex-shrink: 0;}
+        .food-text {flex: 1;}
+        table {width: 100%; border-collapse: collapse; margin: 30px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
+        th {background-color: #3498db; color: white; padding: 15px; text-align: left; font-weight: 600;}
+        td {padding: 15px; border-bottom: 1px solid #ddd;}
+        tr:nth-child(even) {background-color: #f8f9fa;}
+        tr:nth-child(odd) {background-color: white;}
+        .guestbook-form {background-color: #f8f9fa; padding: 30px; border-radius: 8px; margin: 40px 0; border: 1px solid #ddd;}
+        .form-table {width: 100%; max-width: 500px;}
+        .form-table td {padding: 10px; border: none; background: none;}
+        .form-table label {text-align: right; font-weight: 500; color: #333; padding-right: 15px;}
+        .form-table input, .form-table select {width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-family: "Gill Sans", Helvetica, Arial, sans-serif;}
+        .form-table input:focus, .form-table select:focus {outline: none; border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);}
+        .submit-btn {background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-family: "Gill Sans", Helvetica, Arial, sans-serif; font-weight: 500; margin-top: 15px;}
+        .submit-btn:hover {background-color: #2980b9;}
+        .social-icons {position: fixed; top: 100px; right: 35px; display: flex; flex-direction: column; gap: 10px; z-index: 1000;}
+        .social-icon {width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-weight: bold; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.3s ease;}
+        .social-icon.facebook {background-color: #1877f2;}
+        .social-icon.twitter {background-color: #1da1f2;}
+        .social-icon:hover {transform: scale(1.1);}
         @media (max-width: 600px) {
-            body {
-                padding: 15px;
-                font-size: 1rem;
-            }
-
-            h1 {
-                font-size: 2.2rem;
-            }
-
-            h2 {
-                font-size: 1.6rem;
-            }
-
-            p {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
-
-            /* make pet names box expand on mobile! (text was getting too small...) */
-            .pet-names-container {
-                margin: 20px 0;
-            }
-
-            .pet-names-list {
-                max-width: 90%;
-                width: 100%;
-                font-size: 1rem;
-            }
-
-            /* stack food section vertically and fix text size */
-            .food-section {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .food-image {
-                width: 100%;
-                height: 200px;
-            }
-
-            .food-text {
-                width: 100%;
-            }
-
-            .food-text p {
-                font-size: 1rem !important;
-                line-height: 1.5 !important;
-            }
-
-            /* make table horizontally scrollable! so if too narrow than can scroll to read */
-            .table-container {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                width: 100%; /* need to try and make container fit viewport */
-            }
-
-            table {
-                min-width: 500px;
-                width: 100%;
-                font-size: 0.9rem;
-            }
-
-            th, td {
-                padding: 8px 6px;
-                white-space: nowrap;
-            }
-
-            td:last-child {
-                white-space: normal; /* make sure summary text can wrap */
-                min-width: 180px; /* reduce width */
-                max-width: 200px; /* don't get too wide */
-            }
-
-            /* make sure table images don't get too large! */
-            table img {
-                width: 80px !important; 
-                height: auto;
-            }
-            .guestbook-form {
-                padding: 20px;
-            }
-
-            .form-table {
-                width: 100%;
-            }
-
-            .form-table label {
-                font-size: 1rem;
-            }
-
-            .form-table input,
-            .form-table select {
-                font-size: 1rem;
-                padding: 8px;
-                width: 200px;
-                max-width: 200px;
-                box-sizing: border-box;
-            }
-
-            .submit-btn {
-                font-size: 1rem;
-                padding: 12px 24px;
-            }
-
-            .social-icons {
-                top: 80px;
-                right: 20px;
-            }
-
-            .social-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 12px;
-            }
+            body {padding: 15px; font-size: 1rem;}
+            h1 {font-size: 2.2rem;}
+            h2 {font-size: 1.6rem;}
+            p {font-size: 1rem; line-height: 1.5;}
+            .pet-names-container {margin: 20px 0;}
+            .pet-names-list {max-width: 90%; width: 100%; font-size: 1rem;}
+            .food-section {flex-direction: column; gap: 15px;}
+            .food-image {width: 100%; height: 200px;}
+            .food-text {width: 100%;}
+            .food-text p {font-size: 1rem !important; line-height: 1.5 !important;}
+            .table-container {overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%;}
+            table {min-width: 500px; width: 100%; font-size: 0.9rem;}
+            th, td {padding: 8px 6px; white-space: nowrap;}
+            td:last-child {white-space: normal; min-width: 180px; max-width: 200px;}
+            table img {width: 80px !important; height: auto;}
+            .guestbook-form {padding: 20px;}
+            .form-table {width: 100%;}
+            .form-table label {font-size: 1rem;}
+            .form-table input, .form-table select {font-size: 1rem; padding: 8px; width: 200px; max-width: 200px; box-sizing: border-box;}
+            .submit-btn {font-size: 1rem; padding: 12px 24px;}
+            .social-icons {top: 80px; right: 20px;}
+            .social-icon {width: 40px; height: 40px; font-size: 12px;}
         }
     </style>
 </head>
 <body>
     <div class="social-icons">
-        <a href="https://facebook.com" target="_blank" class="social-icon facebook">
-            f
-        </a>
-        <a href="https://twitter.com" target="_blank" class="social-icon twitter">
-            𝕏
-        </a>
+        <a href="https://facebook.com" target="_blank" class="social-icon facebook">f</a>
+        <a href="https://twitter.com" target="_blank" class="social-icon twitter">𝕏</a>
     </div>
-
     <h1>Kiersten Marr</h1>
-    
     <h2>A Recent Trip I Took</h2>
     <p>Earlier this year, I went to the Azores, a group of islands far off the coast of Portugal, with 
         my mom and sister. They're volcanic islands, so we got to see some calderas and do some beautiful hikes. 
         The food there was also amazing: we did a cooking class with a local named Maria, and got to try our hand
         at making pastel de nata (a Portuguese egg custard tart pastry which tastes a bit like creme brulee).</p>
-
     <h2>Favorite Pet Names</h2>
     <p>My favorite pet names and the animals I would give them to are, in no particular order:</p>
     <div class="pet-names-container">
@@ -359,26 +83,21 @@
             <li>A monitor lizard named Nostradamus</li>
         </ul>
     </div>
-
     <h2>My Favorite Restaurant</h2>
     <p>I lived in Boston for 3 years, and my favorite restaurant is still there, in Harvard Square. 
         <a href="https://www.aldenharlow.com/" target="_blank">It's called Alden & Harlow!</a> 
         They serve mostly small plates, but it also has the best pasta dish I've ever had: a basil 
         pasta with a carrot bolognese — which may sound odd, but it tastes great!</p>
-
     <h2>Favorite Food</h2>
     <div class="food-section">
         <div class="food-image"></div>
         <div class="food-text">
-            <p>
-                My favorite food that I prepare for myself is probably overnight oats. I keep it pretty simple.
+            <p>My favorite food that I prepare for myself is probably overnight oats. I keep it pretty simple.
                 I use rolled oats, chia seeds, maple syrup, a little bit of greek yogurt, and unsweetened almond milk. 
                 I combine all of these in a jar, mix, and then let sit in the fridge overnight. Then in the morning I top
-                with fruits or any other toppings I think of (e.g., cinnamon, chopped nuts, etc.). And voila! Overnight oats.
-            </p>
+                with fruits or any other toppings I think of (e.g., cinnamon, chopped nuts, etc.). And voila! Overnight oats.</p>
         </div>
     </div>
-
     <h2>My Favorite Books</h2>
     <div class="table-container">
         <table>
@@ -393,36 +112,31 @@
                 <td data-label="Cover"><img src="a1_images/middlesex.jpg" alt="middlesex cover" style="width:100px; height:auto;"></td>
                 <td data-label="Author">Jeffrey Eugenides</td>
                 <td data-label="Summary">A multi-generational family saga told by the main character Cal, an intersex man describing genetic
-                    and cultural factors that came to shape his identity.
-                </td>
+                    and cultural factors that came to shape his identity.</td>
             </tr>
             <tr>
                 <td data-label="Name">The Goldfinch</td>
                 <td data-label="Cover"><img src="a1_images/goldfinch.jpg" alt="goldfinch cover" style="width:100px; height:auto;"></td>
                 <td data-label="Author">Donna Tartt</td>
                 <td data-label="Summary">After surviving a terrorist attack at a museum in which he loses his mother, a boy steals a famous
-                    painting. What follows is a coming-of-age story told through the lens of art, loss, and crime.
-                </td>
+                    painting. What follows is a coming-of-age story told through the lens of art, loss, and crime.</td>
             </tr>
             <tr>
                 <td data-label="Name">Never Let Me Go</td>
                 <td data-label="Cover"><img src="a1_images/neverletmego.jpg" alt="never let me go cover" style="width:100px; height:auto;"></td>
                 <td data-label="Author">Kazuo Ishiguro</td>
                 <td data-label="Summary">A haunting story about students at a British boarding school who slowly uncover the dark truth about their purpose,
-                    and come to accept it in different ways.
-                </td>
+                    and come to accept it in different ways.</td>
             </tr>
             <tr>
                 <td data-label="Name">Oblivion</td>
                 <td data-label="Cover"><img src="a1_images/oblivion.jpg" alt="oblivion cover" style="width:100px; height:auto;"></td>
                 <td data-label="Author">David Foster Wallace</td>
                 <td data-label="Summary">A collection of dense, funny short stories that explore modern disconnection and inner lives. It was
-                    DFW's third and last short story collection published.
-                </td>
+                    DFW's third and last short story collection published.</td>
             </tr>
         </table>
     </div>
-
     <h2>Guest Book</h2>
     <div class="guestbook-form">
         <form>
