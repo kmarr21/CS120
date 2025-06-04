@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS Problem 1</title>
+</head>
+<body>
+    <h1>Name and Children</h1>
+    <script>
+        var firstName = prompt("What is your first name?"); // first name
+        var lastName = prompt("What is your last name?"); // last name
+        
+        // full name in popup
+        alert("Your name is " + firstName + " " + lastName);
+        
+        var numChildren = prompt("How many children do you have?", "0"); // number of children
+        numChildren = parseInt(numChildren);
+        
+        // display sentence
+        if (numChildren == 0) {document.write("You have no children.");}
+        else if (numChildren == 1) {document.write("You have 1 child.");}
+        else {document.write("You have " + numChildren + " children.");}
+    </script>
+</body>
+</html>

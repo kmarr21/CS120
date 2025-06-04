@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS Problem 3</title>
+</head>
+<body>
+    <h1>Ordering Numbers (Smallest to Largest)</h1>
+    <p>Open the browser's developer tools and check the console to see the results!</p>
+    <script>
+        // ask user for 2 numbers
+        var num1 = prompt("Enter the first number:");
+        num1 = parseFloat(num1);
+        var num2 = prompt("Enter the second number:");
+        num2 = parseFloat(num2);
+        
+        // diplay numbers in order (s to l) in console
+        if (num1 < num2) {console.log(num1 + ", " + num2);}
+        else if (num2 < num1) {console.log(num2 + ", " + num1);}
+        else {console.log("The numbers are the same: " + num1 + ", " + num2);}
+    </script>
+</body>
+</html>

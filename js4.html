@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS Problem 4</title>
+</head>
+<body>
+    <h1>Making and Ordering a Range</h1>
+    <p> Reload page to use again.</p>
+    <script>
+        // get 2 numbers to make range
+        var num1 = prompt("Enter the first number:");
+        num1 = parseInt(num1);
+        var num2 = prompt("Enter the second number:");
+        num2 = parseInt(num2);
+        
+        // figure out start and end (must be smaller number first)
+        var startOfRange, endOfRange;
+        if (num1 <= num2) {startOfRange = num1; endOfRange = num2;}
+        else {startOfRange = num2; endOfRange = num1;}
+        
+        var sum = 0; // track sum
+        var oddNumbers = ""; // track odd numbers (in printable string format to make it easier later!)
+        
+        //  loop
+        for (var i = startOfRange; i <= endOfRange; i++) {
+            sum += i; // add number in range to sum
+            
+            // see if number is odd
+            if (i % 2 == 1) {
+                if (oddNumbers == "") {oddNumbers = i;}
+                else {oddNumbers = oddNumbers + ", " + i;}
+            }
+        }
+        
+        // show results
+        document.write("Range: " + startOfRange + " through " + endOfRange + "<br>");
+        document.write("Odd numbers in range: " + oddNumbers + "<br>");
+        document.write("Sum of all numbers in range: " + sum);
+    </script>
+</body>
+</html>
