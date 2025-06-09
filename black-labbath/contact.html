@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Black Labbath for bookings and events">
+    <title>Contact - Black Labbath</title>
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+        /* stylesheet for contact page */
+        .contact-header {background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/singer.jpg');
+            background-size: cover;background-position: center; padding: 100px 0 60px; text-align: center;}
+        .contact-header h1 {font-size: 3rem; color: #8B5CF6; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;}
+        .contact-content {display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin: 80px 0; align-items: start;}
+        .contact-info { background-color: #2a2a2a; padding: 40px; border-radius: 10px; border-left: 5px solid #8B5CF6;}
+        .contact-info h2 {color: #8B5CF6; font-size: 2rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;}
+        .contact-detail {margin-bottom: 25px;}
+        .contact-detail h3 {color: #ffffff; font-size: 1.3rem; margin-bottom: 8px; font-weight: bold;}
+        .contact-detail p {font-size: 1.1rem; line-height: 1.6;}
+        .contact-detail a {color: #8B5CF6;text-decoration: none;}
+        .contact-detail a:hover {text-decoration: underline;}
+        
+        .contact-form {background-color: #2a2a2a; padding: 40px; border-radius: 10px;}
+        .contact-form h2 {color: #8B5CF6; font-size: 2rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;}
+        .form-group {margin-bottom: 20px;}
+        .form-group label {display: block; margin-bottom: 8px; color: #ffffff; font-weight: 500;} 
+        .form-group input, .form-group select, .form-group textarea {width: 100%; padding: 12px; border: 2px solid #444444;
+            border-radius: 5px; background-color: #333333; color: #ffffff; font-size: 1rem; font-family: "Gill Sans", Helvetica, Arial, sans-serif;}
+        .form-group input:focus, .form-group select:focus,.form-group textarea:focus {outline: none; border-color: #8B5CF6;}
+        .form-group textarea {resize: vertical; min-height: 120px;}     
+        .submit-btn {background-color: #8B5CF6; color: white;padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold;
+            cursor: pointer; transition: background-color 0.3s ease; text-transform: uppercase; letter-spacing: 1px;}
+        .submit-btn:hover {background-color: #7C3AED;}
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/black_labbath_logo_purple_q60.webp" alt="Black Labbath Logo" class="logo-img">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="members.html">Members</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="contact-header">
+            <h1>Contact & Booking</h1>
+            <p style="font-size: 1.3rem; color: #cccccc;">Ready to unleash the howl at your next event?</p>
+        </section>
+        <!-- emails, fb page, instagram are all fake (I made sure these don't already exist) -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2>Get in Touch</h2>
+                        <p style="margin-bottom: 30px; font-size: 1.1rem;">Want to book <em>Black Labbath</em> for your next event, festival, or dog-friendly celebration?</p>
+                        <div class="contact-detail">
+                            <h3>Email:</h3>
+                            <p><a href="mailto:booking@blacklabbathband.com">booking@blacklabbathband.com</a></p>
+                        </div>
+                        <div class="contact-detail">
+                            <h3>Phone:</h3>
+                            <p><a href="tel:+12065557625">(206) 555-ROCK</a></p>
+                            <p style="font-size: 0.9rem; color: #cccccc;">Call or text available, especially for last-minute gig swaps or urgent Labbath requests.</p>
+                        </div>
+                        <div class="contact-detail">
+                            <h3>Social Media:</h3>
+                            <p><strong>Instagram:</strong> <a href="https://instagram.com/blacklabbathband" target="_blank">@blacklabbathband</a></p>
+                            <p><strong>Facebook:</strong> <a href="https://facebook.com/blacklabbathband" target="_blank">facebook.com/blacklabbathband</a></p>
+                        </div>
+                        <div class="contact-detail">
+                            <h3>Based in:</h3>
+                            <p>Seattle, WA</p>
+                            <p style="font-size: 0.9rem; color: #cccccc;">Available for shows across Washington and the Pacific Northwest.</p>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h2>Quick Booking Form</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-type">Event Type</label>
+                                <select id="event-type" name="event-type">
+                                    <option value="">Select Event Type</option>
+                                    <option value="wedding">Wedding</option>
+                                    <option value="festival">Festival</option>
+                                    <option value="brewery">Brewery/Bar</option>
+                                    <option value="private">Private Party</option>
+                                    <option value="corporate">Corporate Event</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-date">Preferred Date</label>
+                                <input type="date" id="event-date" name="event-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Event Location</label>
+                                <input type="text" id="location" name="location" placeholder="City, State">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" placeholder="Tell us about your event, expected crowd size, venue details, and any special song requests..."></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Send Booking Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: booking@blacklabbath.com</p>
+                    <p>Phone: (206) 555-ROCK</p>
+                    <p>Seattle, WA</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://facebook.com" target="_blank">Facebook</a>
+                        <a href="https://instagram.com" target="_blank">Instagram</a>
+                        <a href="https://twitter.com" target="_blank">Twitter</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <img src="images/black_labbath_logo_white_q40.webp" alt="Black Labbath" class="footer-logo">
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Black Labbath. Heavy rock with a wag.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // set min selectable date to today for the event date input (little bit of trying JS here!)
+        document.getElementById('event-date').min = new Date().toISOString().split('T')[0];
+    </script>
+
+</body>
+</html>
