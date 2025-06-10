@@ -50,12 +50,12 @@ main {margin-top: 80px;}
     .header-content p {font-size: 1.2rem;}
     .about-section h2, .reviews-section h2 {font-size: 2rem;}
     .reviews-grid {grid-template-columns: 1fr; gap: 20px;}
-    .footer-content {flex-direction: column; gap: 30px;text-align: center;}
+    .footer-content {flex-direction: column; gap: 30px;text-align: center; align-items: center;}
     .social-links {flex-direction: row; justify-content: center;}
     
     /* make cards on members page smaller + stack */
     .members-grid {grid-template-columns: 1fr; gap: 20px;}
-    .member-card {max-width: 100%;}
+    .member-card {max-width: 100%; margin: 0 15px;}
     
     /* stack on contact page */
     .contact-content {grid-template-columns: 1fr; gap: 30px;}
@@ -63,6 +63,9 @@ main {margin-top: 80px;}
     /*music page */
     .music-content {grid-template-columns: 1fr; gap: 30px;}
     .album-section {text-align: center; margin-top: 20px;}
+    .music-content, .contact-content {grid-template-columns: 1fr; gap: 30px;}
+    .setlist-section, .album-section, .contact-form, .contact-info {padding: 20px;}
+    .album-cover {max-width: 80%; margin: 0 auto;}
     
     /* stack on schedule page */
     .show-item {grid-template-columns: 1fr; gap: 15px; text-align: center;}
@@ -73,6 +76,8 @@ main {margin-top: 80px;}
     .header-content h1 {font-size: 2rem;}
     .header-content p {font-size: 1rem;}
     .cta-button {padding: 12px 24px; font-size: 1rem;}
+    .logo-img {height: 45px;}
+    .header-content h1, .members-header h1, .music-header h1, .contact-header h1 {font-size: 2rem;} /*make sure headers shrink if needed ...*/
     /* if extra small, do this */
     .member-card {margin: 0 10px;}
     .contact-form, .contact-info {padding: 20px;}}
