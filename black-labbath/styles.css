@@ -43,41 +43,93 @@ main {margin-top: 80px;}
 .footer-bottom {text-align: center; padding-top: 20px; border-top: 1px solid #333333; color: #999999;}
 
 /* media queries (making it responsive for when window size adjsuted, mobile etc.) */
-@media (max-width: 768px) {
-    .header-container {flex-direction: column; gap: 20px;}
-    .main-nav ul {gap: 15px; flex-wrap: wrap; justify-content: center;}
-    .header-content h1 {font-size: 2.5rem;}
-    .header-content p {font-size: 1.2rem;}
-    .about-section h2, .reviews-section h2 {font-size: 2rem;}
-    .reviews-grid {grid-template-columns: 1fr; gap: 20px;}
-    .footer-content {flex-direction: column; gap: 30px;text-align: center; align-items: center;}
-    .social-links {flex-direction: row; justify-content: center;}
-    
-    /* make cards on members page smaller + stack */
-    .members-grid {grid-template-columns: 1fr; gap: 20px;}
-    .member-card {max-width: 100%; margin: 0 15px;}
-    
-    /* stack on contact page */
-    .contact-content {grid-template-columns: 1fr; gap: 30px;}
-    
-    /*music page */
-    .music-content {grid-template-columns: 1fr; gap: 30px;}
-    .album-section {text-align: center; margin-top: 20px;}
-    .music-content, .contact-content {grid-template-columns: 1fr; gap: 30px;}
-    .setlist-section, .album-section, .contact-form, .contact-info {padding: 20px;}
-    .album-cover {max-width: 80%; margin: 0 auto;}
-    
-    /* stack on schedule page */
-    .show-item {grid-template-columns: 1fr; gap: 15px; text-align: center;}
-    .show-meta {text-align: center;}}
+/* do large mobile scaling */
+@media (max-width: 1024px) {
+    .reviews-grid {grid-template-columns: repeat(2, 1fr); gap: 25px;}
+    .members-grid {grid-template-columns: repeat(2, 1fr); gap: 30px;}
+    .contact-content, .music-content {gap: 40px;}}
 
-@media (max-width: 480px) {
-    .container {padding: 0 15px;}
-    .header-content h1 {font-size: 2rem;}
-    .header-content p {font-size: 1rem;}
-    .cta-button {padding: 12px 24px; font-size: 1rem;}
+/* med scaling*/
+@media (max-width: 768px) {
+    .header-container {flex-direction: column; gap: 15px; padding: 10px 20px;}
+    .main-nav ul {gap: 15px; flex-wrap: wrap; justify-content: center;}
+    .main-nav a {padding: 8px 12px; font-size: 0.9rem;}
+    .header-content h1 {font-size: 2.5rem !important;}
+    .header-content p {font-size: 1.2rem !important;}
+    .members-header h1, .music-header h1, .contact-header h1, .schedule-header h1 {font-size: 2.2rem !important;}
+    .about-section h2, .reviews-section h2 {font-size: 2rem;}
+    
+    .reviews-grid {grid-template-columns: 1fr !important; gap: 20px;}
+    .members-grid {grid-template-columns: 1fr !important; gap: 25px;}
+    .contact-content {grid-template-columns: 1fr !important; gap: 30px;}
+    .music-content {grid-template-columns: 1fr !important; gap: 30px;}
+    
+    .member-card {max-width: 100%; margin: 0;}
+    .member-image {width: 100%; height: auto; object-fit: contain;}
+
+    .contact-form, .contact-info, .setlist-section, .album-section {padding: 25px;}
+    .album-cover {max-width: 250px; width: 100%;}
+
+    .show-item {grid-template-columns: 80px 1fr !important; gap: 20px; align-items: flex-start; padding: 20px 0;}
+    .show-meta {text-align: left; min-width: auto;}
+    .show-date {text-align: center;}
+    .date-number {font-size: 2rem;}
+    .month {font-size: 1.4rem;}
+
+    .footer-content {flex-direction: column; gap: 25px; text-align: center; align-items: center;}
+    .social-links {flex-direction: row; justify-content: center;}
+    .footer-logo {height: 60px;}}
+
+/* noticed breakdown in Inspect around 615px, so adding adjustment point here*/
+@media (max-width: 615px) {
+    .header-container {padding: 8px 15px;}
     .logo-img {height: 45px;}
-    .header-content h1, .members-header h1, .music-header h1, .contact-header h1 {font-size: 2rem;} /*make sure headers shrink if needed ...*/
-    /* if extra small, do this */
-    .member-card {margin: 0 10px;}
-    .contact-form, .contact-info {padding: 20px;}}
+    .main-nav ul {gap: 10px;}
+    .main-nav a {padding: 6px 10px; font-size: 0.85rem;}
+    
+    .header-section, .members-header, .music-header, .contact-header, .schedule-header {padding: 60px 0 40px !important;
+        min-height: 300px; display: flex; align-items: center; justify-content: center; text-align: center;}
+    .header-content, .members-header, .music-header, .contact-header, .schedule-header {display: flex; flex-direction: column; 
+        align-items: center; justify-content: center; text-align: center; width: 100%;}
+    .header-content h1 {font-size: 2rem !important; line-height: 1.2;}
+    .header-content p {font-size: 1rem !important;}
+    .members-header h1, .music-header h1, .contact-header h1, .schedule-header h1 {font-size: 1.8rem !important; line-height: 1.2;}
+    .container {padding: 0 15px;}
+    .about-section, .reviews-section, .members-section, .music-section, .contact-section, .schedule-section {padding: 40px 0;}
+
+    .review-card, .member-card, .contact-form, .contact-info, .setlist-section, .album-section {padding: 20px; margin: 0;}
+
+    .member-image {width: 100%; height: auto; max-height: none; object-fit: contain; display: block;} /*make sure member images not cropping faces */
+    .album-cover {max-width: 200px; width: 90%;}
+    
+    /* have schedule components completely stacking */
+    .show-item {grid-template-columns: 1fr !important; gap: 15px; text-align: center; padding: 20px;
+        background-color: rgba(42, 42, 42, 0.5); border-radius: 8px; margin-bottom: 15px;}
+    .show-date, .show-meta {text-align: center;}
+    .show-meta {margin-top: 10px;}
+    
+    .form-group input, .form-group select, .form-group textarea {font-size: 16px; padding: 15px;} /* trying to force to prevent auto-zoom on iphone*/
+
+    .cta-button, .submit-btn {padding: 12px 24px; font-size: 1rem;width: 100%; max-width: 300px; margin: 0 auto; display: block;}}
+
+/* extra small mobile (this got wonky on inspect and my iphone w/o this section) */
+@media (max-width: 480px) {
+    /* header even smaller */
+    .logo-img {height: 40px;}
+    .main-nav a {font-size: 0.8rem; padding: 5px 8px;}
+    
+    .header-content h1 {font-size: 1.6rem !important;}
+    .header-content p {font-size: 0.9rem !important;}
+    .members-header h1, .music-header h1, .contact-header h1, .schedule-header h1 {font-size: 1.5rem !important;}
+    
+    .container {padding: 0 10px;}
+    .review-card, .member-card, .contact-form, .contact-info, .setlist-section, .album-section {padding: 15px;}
+    .member-image {object-fit: contain;} /*make member images have even smaller max height*/
+    .album-cover {max-width: 150px;}
+    
+    /* scale text too */
+    .about-section h2, .reviews-section h2 {font-size: 1.6rem;}
+    .member-name {font-size: 1.4rem;}
+    .event-title {font-size: 1.3rem;}
+
+    .footer-logo {height: 50px;}}
