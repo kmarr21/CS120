@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Problem 6</title>
+<style>
+    #stateDisplay {border: 2px solid #000; padding: 10px; margin-top: 10px; min-height: 100px; background-color: #f9f9f9;}
+    #stateList {margin-right: 10px;}
+    button {padding: 5px 10px; margin: 5px;}
+</style>
+<script>
+// STATES
+let states = ["Washington", "Oregon", "California", "Idaho", "Nevada", 
+    "Colorado", "Utah", "Arizona", "Montana", "Wyoming"];
+
+// create option elements from states array
+function populateStates() {
+    let selectElement = document.getElementById("stateList");
+    
+    // create option elements for each state!
+    for (let i = 0; i < states.length; i++) {
+        let option = document.createElement("option");
+        option.value = states[i];
+        option.textContent = states[i];
+        selectElement.appendChild(option);
+    }
+    
+    // set first item as selected by default
+    selectElement.selectedIndex = 0;
+}
+
+//add selected state to the display div
+function addState() {
+    let selectElement = document.getElementById("stateList");
+    let displayDiv = document.getElementById("stateDisplay");
+    
+    // get selected state
+    let selectedState = selectElement.options[selectElement.selectedIndex].text;
+    
+    // add state to display div
+    if (displayDiv.innerHTML.trim() === "") {
+        displayDiv.innerHTML = selectedState;
+    } else {
+        displayDiv.innerHTML += "<br>" + selectedState;
+    }
+}
+
+// clear all states from display div
+function clearStates() {
+    document.getElementById("stateDisplay").innerHTML = "";
+}
+
+// set up event handlers!!
+window.onload = function() {
+    populateStates();
+    document.getElementById("addBtn").onclick = addState;
+    document.getElementById("clearBtn").onclick = clearStates;
+}
+</script>
+</head>
+
+<body>
+    <h1>Problem 6: Select States</h1>
+    <p>Select states from the list</p>
+    <div>
+        <select id="stateList" size="8"></select>
+        <button id="addBtn">Add State</button>
+    </div>
+    <div id="stateDisplay"></div>
+    <button id="clearBtn">Clear States</button>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Problem 3</title>
+<script>
+function createNumberedList() {
+    let nameString = "Pat, Chris, Marlon, Ferncroft, Assunta"; // string w/ names comma-separated 
+    let namesArray = nameString.split(', '); // split string into array
+    let listItems = namesArray.map((name, index) => `<li>${name}</li>`); // use map to make into numbered list item
+    let listHTML = listItems.join(''); // join array elements into string
+    let completeList = `<ol>${listHTML}</ol>`; // make complete ordered list!
+    
+    // show result
+    document.getElementById("answer").innerHTML = `
+        <p>Original string: "${nameString}"</p>
+        <p>Numbered list:</p>
+        ${completeList}`;}
+
+// call function
+window.onload = function() {createNumberedList();}
+
+</script>
+</head>
+<body>
+    <h1>Problem 3: Names to List</h1>
+    <p>Convert string of names to a list.</p>
+    <div id="answer"></div>
+</body>
+</html>

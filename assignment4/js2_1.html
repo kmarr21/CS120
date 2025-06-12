@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Problem 1</title>
+<script>
+// count: items in array less than provided value
+function count(array, value) {
+    let counter = 0;
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] < value) {counter++;}
+    }
+    return counter;
+}
+
+// testing: create array, call count(), and show result
+function testCount() {
+    // make testing values
+    let numbers = [3, 55, 30, 28, 9, 12];
+    let testValue = 10;
+    
+    // call function
+    let result = count(numbers, testValue);
+    
+    // show in the answer div
+    let message = `Array: [${numbers.join(', ')}]<br>` + `Value: ${testValue}<br>` + `Count of items less than ${testValue}: ${result}`;
+    
+    document.getElementById("answer").innerHTML = message;
+}
+
+// call testCount
+window.onload = function() {testCount();}
+
+</script>
+
+</head>
+<body>
+    <h1>Problem 1: Array Counter</h1>
+    <p>Counting items in array that are less than a given value</p>
+    <div id="answer"></div>
+</body>
+</html>

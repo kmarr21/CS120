@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Extra Credit Problem</title>
+<style>
+    #stateDisplay {border: 2px solid #000; padding: 10px; margin-top: 10px; min-height: 100px; background-color: #f9f9f9;}
+    #stateList {margin-right: 10px;}
+    button {padding: 5px 10px; margin: 5px;}
+    ol {margin: 0;padding-left: 20px;}
+</style>
+<script>
+// STATES
+let states = ["Washington", "Oregon", "California", "Idaho", "Nevada", 
+    "Colorado", "Utah", "Arizona", "Montana", "Wyoming"];
+
+// array for added states for numbered list
+let addedStates = [];
+
+// create option elements from states array
+function populateStates() {
+    let selectElement = document.getElementById("stateList");
+    // clear any options first
+    selectElement.innerHTML = "";
+    
+    // create option elements for each state!
+    for (let i = 0; i < states.length; i++) {
+        let option = document.createElement("option");
+        option.value = states[i];
+        option.textContent = states[i];
+        selectElement.appendChild(option);
+    }
+    
+    // make first item selected by default (IF there's options)
+    if (selectElement.options.length > 0) {selectElement.selectedIndex = 0;}
+}
+
+// update numbered list display
+function updateDisplay() {
+    let displayDiv = document.getElementById("stateDisplay");
+    if (addedStates.length === 0) {displayDiv.innerHTML = ""; return;}
+    
+    // numbered list html
+    let listHTML = "<ol>";
+    for (let i = 0; i < addedStates.length; i++) {listHTML += "<li>" + addedStates[i] + "</li>";}
+    listHTML += "</ol>";
+    
+    displayDiv.innerHTML = listHTML;
+}
+
+//add selected state to the display div
+function addState() {
+    let selectElement = document.getElementById("stateList");
+    
+    // any options left?
+    if (selectElement.options.length === 0) {alert("No more states to add!"); return;}
+    
+    // get selected state
+    let selectedIndex = selectElement.selectedIndex;
+    let selectedState = selectElement.options[selectedIndex].text;
+
+    // add state to tracking array
+    addedStates.push(selectedState);
+
+    // remove selected option from select list
+    selectElement.remove(selectedIndex);
+
+    // update display
+    updateDisplay();
+
+    // set focus to first remaining option if any exist
+    if (selectElement.options.length > 0) {selectElement.selectedIndex = 0;}
+}
+
+// clear all states & restore select list
+function clearStates() {
+    // clear addedstates array
+    addedStates = [];
+    
+    // clear display
+    document.getElementById("stateDisplay").innerHTML = "";
+    
+    populateStates(); // restore original select list
+}
+
+// set up event handlers!!
+window.onload = function() {
+    populateStates();
+    document.getElementById("addBtn").onclick = addState;
+    document.getElementById("clearBtn").onclick = clearStates;
+}
+</script>
+</head>
+
+<body>
+    <h1>Extra Credit: Select States (Enhanced!)</h1>
+    <p>Select states from the list; they will be removed from the list and added to a numbered collection when selected.</p>
+    <div>
+        <select id="stateList" size="8"></select>
+        <button id="addBtn">Add State</button>
+    </div>
+    <div id="stateDisplay"></div>
+    <button id="clearBtn">Clear States</button>
+</body>
+</html>
