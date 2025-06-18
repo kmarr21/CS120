@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Game</title>
+    <style>
+        body {font-family: Arial, sans-serif; background-color: #1a1a1a; color: #ffffff; padding: 20px; margin: 0;}
+        h1 {text-align: center; margin-bottom: 30px;}
+
+        .game-container {max-width: 400px; margin: 0 auto;}
+        .game-board {margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;}
+        .word-row {display: flex; gap: 5px; margin-bottom: 5px;}
+
+        .letter-box {width: 50px; height: 50px;border: 2px solid #666; background-color: #333; display: flex; align-items: center;
+            justify-content: center; font-size: 24px; font-weight: bold; text-transform: uppercase;}
+        .letter-box.correct {background-color: #538d4e; border-color: #538d4e;}
+        .letter-box.present {background-color: #b59f3b; border-color: #b59f3b;}
+        .letter-box.absent {background-color: #3a3a3c; border-color: #3a3a3c;}
+
+        .input-section {text-align: center; margin-bottom: 30px;}
+        #guessInput {padding: 10px; font-size: 16px; width: 150px; margin-right: 10px; background-color: #333; color: white; 
+            border: 1px solid #666; text-transform: uppercase;}
+
+        button {padding: 10px 15px; font-size: 16px; background-color: #555; color: white; border: 1px solid #666; cursor: pointer;}
+        button:hover {background-color: #666;}
+        button:disabled {background-color: #222; cursor: not-allowed;}
+
+        .keyboard {margin-bottom: 20px;}
+        .keyboard-row {display: flex; justify-content: center; gap: 3px; margin-bottom: 5px;}
+        .key {width: 35px;height: 45px; background-color: #555; color: white; border: 1px solid #666; font-size: 12px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;}
+
+        .key:hover {background-color: #666;}
+        .key.correct {background-color: #538d4e;}
+        .key.present {background-color: #b59f3b;}
+        .key.absent {background-color: #3a3a3c;}
+
+        .message {text-align: center; margin: 20px 0; padding: 10px; min-height: 40px;}
+        .message.error {background-color: #d32f2f; color: white;}
+
+        .message.success {background-color: #388e3c; color: white;}
+        #restartBtn {display: none; margin: 20px auto; padding: 15px 25px; background-color: #f57c00;}
+
+        /* responsive for 600 px! */
+        @media (max-width: 600px) {
+            .letter-box {width: 40px; height: 40px; font-size: 20px;} 
+            #guessInput {width: 120px;}
+            .key {width: 30px; height: 40px; font-size: 11px;}}
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Wordle Game</h1>
+        <div class="game-board" id="gameBoard">
+            <!-- JS makes a game board here -->
+        </div>
+        <div class="input-section">
+            <input type="text" id="guessInput" maxlength="5" placeholder="Enter word">
+            <button id="submitBtn">Submit</button>
+        </div>
+        <div class="keyboard" id="keyboard">
+            <!-- JS makes a keyboard here -->
+        </div>
+        <div class="message" id="message"></div>
+        <button id="restartBtn">Restart Game</button>
+    </div>
+    <script>
+        // 150 common 5 letter words
+        const WORDS = [
+            "about", "above", "abuse", "actor", "acute", "admit", "adopt", "adult", "after", "again",
+            "agent", "agree", "ahead", "alarm", "album", "alert", "alien", "align", "alike", "alive",
+            "allow", "alone", "along", "alter", "among", "anger", "angle", "angry", "apart", "apple",
+            "apply", "arena", "argue", "arise", "array", "arrow", "aside", "asset", "audio", "audit",
+            "avoid", "awake", "award", "aware", "badly", "baker", "bands", "basic", "batch", "beach",
+            "began", "begin", "being", "below", "bench", "billy", "birth", "black", "blame", "blank",
+            "blind", "block", "blood", "board", "boost", "booth", "bound", "brain", "brand", "brass",
+            "brave", "bread", "break", "breed", "brick", "brief", "bring", "broad", "broke", "brown",
+            "build", "built", "buyer", "cable", "calif", "carry", "catch", "cause", "chain", "chair",
+            "chaos", "charm", "chart", "chase", "cheap", "check", "chest", "chief", "child", "china",
+            "chose", "civil", "claim", "class", "clean", "clear", "click", "climb", "clock", "close",
+            "cloud", "coach", "coast", "could", "count", "court", "cover", "craft", "crash", "crazy",
+            "cream", "crime", "cross", "crowd", "crown", "crude", "curve", "cycle", "daily", "dance",
+            "dated", "dealt", "death", "debut", "delay", "depth", "doing", "doubt", "dozen", "draft",
+            "drama", "drank", "dream", "dress", "drill", "drink", "drive", "drove", "dying", "eager",
+            "early", "earth", "eight", "elite", "empty", "enemy", "enjoy", "enter", "entry", "equal",
+            "error", "event", "every", "exact", "exist", "extra", "faith", "false", "fault", "fiber",
+            "field", "fifth", "fifty", "fight", "final", "first", "fixed", "flash", "fleet", "floor",
+            "fluid", "focus", "force", "forth", "forty", "forum", "found", "frame", "frank", "fraud",
+            "fresh", "front", "fruit", "fully", "funny", "giant", "given", "glass", "globe", "going",
+            "grace", "grade", "grand", "grant", "grass", "grave", "great", "green", "gross", "group",
+            "grown", "guard", "guess", "guest", "guide", "happy", "harry", "heart", "heavy", "hence",
+            "henry", "horse", "hotel", "house", "human", "ideal", "image", "index", "inner", "input",
+            "issue", "japan", "jimmy", "joint", "jones", "judge", "known", "label", "large", "laser",
+            "later", "laugh", "layer", "learn", "lease", "least", "leave", "legal", "level", "lewis",
+            "light", "limit", "links", "lives", "local", "loose", "lower", "lucky", "lunch", "lying",
+            "magic", "major", "maker", "march", "maria", "match", "maybe", "mayor", "meant", "media",
+            "metal", "might", "minor", "minus", "mixed", "model", "money", "month", "moral", "motor",
+            "mount", "mouse", "mouth", "moved", "movie", "music", "needs", "never", "newly", "night",
+            "noise", "north", "noted", "novel", "nurse", "occur", "ocean", "offer", "often", "order",
+            "other", "ought", "paint", "panel", "paper", "party", "peace", "peter", "phase", "phone",
+            "photo", "piano", "piece", "pilot", "pitch", "place", "plain", "plane", "plant", "plate",
+            "point", "pound", "power", "press", "price", "pride", "prime", "print", "prior", "prize",
+            "proof", "proud", "prove", "queen", "quick", "quiet", "quite", "radio", "raise", "range",
+            "rapid", "ratio", "reach", "ready", "realm", "rebel", "refer", "relax", "repay", "reply",
+            "right", "rigid", "risky", "river", "robin", "roger", "roman", "rough", "round", "route",
+            "royal", "rural", "safety", "sally", "scale", "scene", "scope", "score", "sense", "serve",
+            "seven", "shall", "shape", "share", "sharp", "sheet", "shelf", "shell", "shift", "shine",
+            "shirt", "shock", "shoot", "short", "shown", "sides", "sight", "silly", "since", "sixth",
+            "sixty", "sized", "skill", "sleep", "slide", "small", "smart", "smile", "smith", "smoke",
+            "snake", "snow", "soapy", "social", "solid", "solve", "sorry", "sound", "south", "space",
+            "spare", "speak", "speed", "spend", "spent", "split", "spoke", "sport", "staff", "stage",
+            "stake", "stand", "start", "state", "steam", "steel", "steep", "steer", "stick", "still",
+            "stock", "stone", "stood", "store", "storm", "story", "strip", "stuck", "study", "stuff",
+            "style", "sugar", "suite", "super", "sweet", "table", "taken", "taste", "taxes", "teach",
+            "terry", "texas", "thank", "theft", "their", "theme", "there", "these", "thick", "thing",
+            "think", "third", "those", "three", "threw", "throw", "thumb", "tight", "timer", "tired",
+            "title", "today", "topic", "total", "touch", "tough", "tower", "track", "trade", "train",
+            "treat", "trend", "trial", "tribe", "trick", "tried", "tries", "truck", "truly", "trust",
+            "truth", "twice", "uncle", "under", "undue", "union", "unity", "until", "upper", "upset",
+            "urban", "usage", "used", "user", "using", "usual", "valid", "value", "video", "virus",
+            "visit", "vital", "vocal", "voice", "waste", "watch", "water", "wheel", "where", "which",
+            "while", "white", "whole", "whose", "woman", "women", "world", "worry", "worse", "worst",
+            "worth", "would", "write", "wrong", "wrote", "young", "youth", "zone"];
+
+        // GAME CLASS
+        class WordleGame {
+            constructor() {
+                this.currentAnswer = "";
+                this.currentRow = 0;
+                this.gameOver = false;
+                this.usedLetters = {}; //tracking letters used on keybaord
+                
+                // make board a and keyboard
+                this.createBoard();
+                this.createKeyboard();}
+            
+            // Check if word is valid using Merriam-Webster API
+            async isValidWord(word) {
+                try {
+                    const response = await fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/test?key=c31c45af-8c18-4ec8-bbe8-8a159f8df5eb`);
+                    const data = await response.json();
+                    
+                    // if returns array with actual definitions, then it's valid
+                    return Array.isArray(data) && data.length > 0 && typeof data[0].meta !== 'undefined';
+                } catch {
+                    return true; // if API fails, allow word
+                }
+            }
+            
+            startGame() {
+                // to start, pick a random word from the WORDS array
+                this.currentAnswer = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+                console.log("Answer:", this.currentAnswer); // shows answer in the console!
+                
+                this.currentRow = 0;
+                this.gameOver = false;
+                this.usedLetters = {};
+                
+                this.resetBoard();
+                this.resetKeyboard();
+                this.clearInput();
+                this.showMessage("");
+                document.getElementById('restartBtn').style.display = 'none';}
+            
+            resetBoard() {
+                // clear letter boxes; keep board there
+                for (let row = 0; row < 6; row++) {
+                    for (let col = 0; col < 5; col++) {
+                        const box = document.getElementById(`box-${row}-${col}`);
+                        box.textContent = '';
+                        box.className = 'letter-box';}}}
+            
+            resetKeyboard() {
+                // reset keyboard
+                const keys = document.querySelectorAll('.key');
+                keys.forEach(function(key) {
+                    key.className = 'key';});}
+            
+            createBoard() {
+                const board = document.getElementById('gameBoard');
+                board.innerHTML = '';
+                for (let row = 0; row < 6; row++) {
+                    const wordRow = document.createElement('div');
+                    wordRow.className = 'word-row';
+                    
+                    for (let col = 0; col < 5; col++) {
+                        const box = document.createElement('div');
+                        box.className = 'letter-box';
+                        box.id = `box-${row}-${col}`;
+                        wordRow.appendChild(box);}
+                    
+                    board.appendChild(wordRow);}}
+            
+            createKeyboard() {
+                const keyboard = document.getElementById('keyboard');
+                const rows = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+                    ['Z', 'X', 'C', 'V', 'B', 'N', 'M']];
+                keyboard.innerHTML = '';
+
+                // forEach to make the keyboard
+                rows.forEach(function(row) {
+                    const keyRow = document.createElement('div');
+                    keyRow.className = 'keyboard-row';
+                    row.forEach(function(letter) {
+                        const key = document.createElement('button');
+                        key.className = 'key';
+                        key.textContent = letter;
+                        key.id = `key-${letter}`;
+                        keyRow.appendChild(key);});
+                    
+                    keyboard.appendChild(keyRow);});}
+            
+            async submitGuess() {
+                const input = document.getElementById('guessInput');
+                const guess = input.value.toUpperCase();
+                
+                if (guess.length !== 5) {
+                    this.showMessage("Please enter a 5-letter word", "error");
+                    return;}
+                
+                // check if word is valid using Merriam-Webster API
+                this.showMessage("Checking word...", "");
+                const isValid = await this.isValidWord(guess);
+                
+                if (!isValid) {
+                    this.showMessage("Not a valid word. Try again!", "error");
+                    return;
+                }
+                
+                this.processGuess(guess);
+                input.value = '';
+            }
+            
+            processGuess(guess) {
+                this.displayGuess(guess);
+                this.updateKeyboard(guess);
+                
+                if (guess === this.currentAnswer) {
+                    this.showMessage("You won! Congratulations!", "success");
+                    this.endGame();
+                } else if (this.currentRow >= 5) {
+                    this.showMessage("Game over! The word was: " + this.currentAnswer, "error");
+                    alert("Game over! The word was: " + this.currentAnswer);
+                    this.endGame();
+                } else {this.currentRow++;}
+            }
+            
+            displayGuess(guess) {
+                const result = this.checkGuess(guess);
+                for (let i = 0; i < 5; i++) {
+                    const box = document.getElementById(`box-${this.currentRow}-${i}`);
+                    box.textContent = guess[i];
+                    box.className = `letter-box ${result[i]}`;}}
+            
+            checkGuess(guess) {
+                const result = [];
+                const answerLetters = this.currentAnswer.split('');
+                const guessLetters = guess.split('');
+                
+                // mark correct letters
+                for (let i = 0; i < 5; i++) {
+                    if (guessLetters[i] === answerLetters[i]) {
+                        result[i] = 'correct';
+                        answerLetters[i] = null; // mark as used!
+                    }}
+                
+                // NEXT, mark absent/present letters
+                for (let i = 0; i < 5; i++) {
+                    if (result[i] === undefined) {
+                        const foundIndex = answerLetters.indexOf(guessLetters[i]);
+                        if (foundIndex !== -1) {
+                            result[i] = 'present';
+                            answerLetters[foundIndex] = null; // mark as used!
+                        } else {result[i] = 'absent';}
+                    }}
+                return result;}
+            
+            updateKeyboard(guess) {
+                const result = this.checkGuess(guess);
+                for (let i = 0; i < 5; i++) {
+                    const letter = guess[i];
+                    const status = result[i];
+                    const key = document.getElementById(`key-${letter}`);
+                    
+                    if (key && (!this.usedLetters[letter] || status === 'correct' || 
+                        (status === 'present' && this.usedLetters[letter] !== 'correct'))) {
+                        this.usedLetters[letter] = status;
+                        key.className = `key ${status}`;
+                    }}}
+            
+            showMessage(text, type) {
+                const message = document.getElementById('message');
+                message.textContent = text;
+                message.className = type ? `message ${type}` : 'message';}
+            
+            clearInput() {
+                document.getElementById('guessInput').value = '';
+                document.getElementById('guessInput').disabled = false;
+                document.getElementById('submitBtn').disabled = false;}
+            
+            endGame() {
+                this.gameOver = true;
+                document.getElementById('guessInput').disabled = true;
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('restartBtn').style.display = 'block';}
+        }
+        
+        // make a game instance
+        let game;
+        
+        // start the game once the page loads . . . 
+        window.onload = function() {
+            game = new WordleGame();
+            game.startGame();
+            
+            //event handlers
+            document.getElementById('submitBtn').onclick = () => game.submitGuess();
+            document.getElementById('restartBtn').onclick = () => game.startGame();
+            
+            // make sure input is valid (though I'm not checking if something if something is s real word or proper noun . . . don't have a full dictionary)
+            document.getElementById('guessInput').addEventListener('input', function(e) {e.target.value = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase();});
+            
+            // Enter key support
+            document.getElementById('guessInput').addEventListener('keypress', async function(e) {if (e.key === 'Enter') {await game.submitGuess();}});
+        };
+    </script>
+</body>
+</html>
