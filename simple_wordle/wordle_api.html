@@ -224,12 +224,13 @@
                 
                 if (!isValid) {
                     this.showMessage("Not a valid word. Try again!", "error");
-                    return;
-                }
+                    return;}
+
+                // CLEAR the message if success
+                this.showMessage("");  
                 
                 this.processGuess(guess);
-                input.value = '';
-            }
+                input.value = '';}
             
             processGuess(guess) {
                 this.displayGuess(guess);
