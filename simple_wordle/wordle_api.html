@@ -135,18 +135,16 @@
                 this.createBoard();
                 this.createKeyboard();}
             
-            // Check if word is valid using Merriam-Webster API
+            // check word is valid using Merriam-Webster API
             async isValidWord(word) {
                 try {
-                    const response = await fetch(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/test?key=c31c45af-8c18-4ec8-bbe8-8a159f8df5eb`);
+                    const response = await fetch(`check_word.php?word=${word}`);
                     const data = await response.json();
-                    
-                    // if returns array with actual definitions, then it's valid
-                    return Array.isArray(data) && data.length > 0 && typeof data[0].meta !== 'undefined';
-                } catch {
-                    return true; // if API fails, allow word
-                }
-            }
+                    return data.valid;
+                } catch (e) {
+                    console.error("Error checking word:", e);
+                    return true; // fallback: let user guess
+                }}
             
             startGame() {
                 // to start, pick a random word from the WORDS array
