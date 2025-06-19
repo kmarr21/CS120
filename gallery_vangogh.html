@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Van Gogh Gallery</title>
+<!-- jQuery-->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style type="text/css">
+body {font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5;}
+h1 {text-align: center; color: #2c3e50; margin-bottom: 30px;}
+
+#thumbnails {text-align: center; margin-bottom: 30px; padding: 20px; background-color: white; border-radius: 10px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);}
+.thumbnail {width: 120px; height: 90px; margin: 0 10px; cursor: pointer; border: 3px solid #bdc3c7;
+    border-radius: 5px; transition: border-color 0.3s; object-fit: cover;}
+.thumbnail:hover {border-color: #3498db;}
+
+#largeImageContainer {text-align: center; margin-bottom: 30px;padding: 20px; background-color: white; border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); min-height: 400px;}
+#largeImage {max-width: 500px; max-height: 400px; border-radius: 5px; display: none;}
+
+#infoPanel {background-color: #f8f9fa; color: #2c3e50; padding: 15px; border-radius: 8px; margin: 20px auto; width: 400px;
+    text-align: center; display: none; border: 1px solid #dee2e6; box-shadow: 0 1px 3px rgba(0,0,0,0.1);}
+#infoPanel h3 {margin: 0 0 10px 0; font-size: 24px;}
+#infoPanel p {margin: 0; font-size: 18px; font-weight: bold;}
+
+.instructions {text-align: center; color: #7f8c8d; font-style: italic; margin-bottom: 20px;}
+</style>
+<script>
+// GalleryItem class (w/ function technique!)
+function GalleryItem(name, price, thumbnail, largeImage) {
+    this.name = name;
+    this.price = price;
+    this.thumbnail = thumbnail;
+    this.largeImage = largeImage;}
+var gallery = [];
+var lockedIndex = null;
+
+$(document).ready(function() {
+    gallery.push(new GalleryItem("Irises", "$130M", "van_gogh_images/irises.jpg", "van_gogh_images/irises.jpg"));
+    gallery.push(new GalleryItem("Haymaking", "$20M", "van_gogh_images/haymaking.jpg", "van_gogh_images/haymaking.jpg"));
+    gallery.push(new GalleryItem("The Bedroom", "$155M", "van_gogh_images/the_bedroom.jpg", "van_gogh_images/the_bedroom.jpg"));
+    gallery.push(new GalleryItem("Self-Portrait with Grey Felt Hat", "$115M", "van_gogh_images/self_portrait_with_grey_felt_hat.jpg", "van_gogh_images/self_portrait_with_grey_felt_hat.jpg"));
+    gallery.push(new GalleryItem("The White Orchard", "$42M", "van_gogh_images/the_white_orchard.jpg", "van_gogh_images/the_white_orchard.jpg"));
+    populateThumbnails();});
+
+function populateThumbnails() {
+    gallery.forEach(function(item, index) {
+        var thumbnailImg = $('<img>').addClass('thumbnail').attr('src', item.thumbnail).attr('alt', item.name).attr('data-index', index);
+        $('#thumbnails').append(thumbnailImg);});
+
+    // hover: overrides lockedIndex
+    $('.thumbnail').hover(
+        function() {
+            var index = parseInt($(this).attr('data-index'));
+            lockedIndex = null;  // ancel lock on hover!
+            showLargeImage(index);},
+        function() {
+            if (lockedIndex === null) {$('#largeImage').stop(true, true).fadeOut(500);
+            } else {showLargeImage(lockedIndex);} // restore locked image
+        });
+
+    // click: sets locked image + info panel
+    $('.thumbnail').click(function() {
+        var index = parseInt($(this).attr('data-index'));
+        lockedIndex = index;
+        showLargeImage(index);
+        $('#infoPanel h3').text(gallery[index].name);
+        $('#infoPanel p').text(gallery[index].price);
+        $('#infoPanel').stop(true, true).fadeIn(300).delay(4000).fadeOut(300);});}
+
+function showLargeImage(index) {
+    var item = gallery[index];
+    $('#largeImage').stop(true, true).attr('src', item.largeImage).fadeIn(500);}
+</script>
+
+</head>
+<body>
+    <h1>Van Gogh Gallery</h1>
+    <p class="instructions">Hover on thumbnail to see Van Gogh painting • Click thumbnail to see painting information</p>
+    <div id="thumbnails"></div>
+    <div id="largeImageContainer">
+        <img id="largeImage" src="" alt="Large artwork display">
+    </div>
+    <div id="infoPanel">
+        <h3></h3>
+        <p></p>
+    </div>
+</body>
+</html>
