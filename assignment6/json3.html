@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<title>Part 3: Filter the Data</title>
+<style>
+    body {font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5;}
+    .container {max-width: 800px; margin: 0 auto; background-color: white; padding: 30px;
+        border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);}
+    h1 {color: #333; text-align: center;}
+    .back-link {display: inline-block; margin-bottom: 20px; padding: 10px 15px; background-color: #666;
+        color: white; text-decoration: none; border-radius: 5px;}
+    .back-link:hover {background-color: #555;}
+    .section {margin: 20px 0;}
+    .section h2 {color: #2A00FF;border-bottom: 2px solid #2A00FF;padding-bottom: 5px;}
+    .filter-form {background-color: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd;margin: 20px 0;}
+    .form-group {margin-bottom: 15px;}
+    label {display: block; font-weight: bold; margin-bottom: 5px; color: #333;}
+    select {width: 200px; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; background-color: white;}
+    .filter-btn {padding: 10px 20px; font-size: 16px;background-color: #2A00FF; color: white;
+        border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;}
+    .filter-btn:hover {background-color: #1a0099;}
+    .results {margin-top: 20px; padding: 20px; background-color: #f0f8ff; border: 1px solid #b3d9ff;
+        border-radius: 8px; display: none;}
+    .results h3 {margin-top: 0; color: #2A00FF;}
+    .song-title {padding: 8px 0; border-bottom: 1px solid #e0e0e0; font-size: 16px;}
+    .song-title:last-child {border-bottom: none;}
+    .loading {text-align: center; font-size: 18px; color: #666; padding: 40px;}
+    .error {background-color: #ffebee; border: 1px solid #f44336; color: #c62828;
+        padding: 15px; border-radius: 5px; margin: 20px 0;}
+    .no-results {font-style: italic; color: #666;}
+</style>
+</head>
+<body>
+    <div class="container">
+        <a href="json.html" class="back-link">← Back to Main</a>
+        <h1>Part 3: Filter the Data</h1>
+        <div class="section">
+            <h2>Genre Filter</h2>
+            <p>Select a genre from the dropdown to filter songs. Genres are loaded from the JSON data.</p>
+        </div>
+        <div class="section">
+            <div id="filter-section" class="loading">Loading filter options...</div>
+        </div>
+        <div id="results-section" class="results">
+            <h3>Filtered Songs:</h3>
+            <div id="filtered-songs"></div>
+        </div>
+    </div>
+    <script>
+        var songData; //store JSON data
+        $(document).ready(function() {
+            // JSON data from songs.json file using $.get
+            $.get("songs.json", function(data) {
+                songData = data;
+                createFilterForm(); // create filter
+                // event handler for filter button!
+                $("#filter-btn").click(function() {filterSongs();});
+            }).fail(function() {// handle the error if the file can't be loaded right
+                $("#filter-section").html('<div class="error">Error: Could not load songs.json file. Make sure the file exists in the same directory.</div>');
+            });
+        });
+        function createFilterForm() { // get all unique genres from JSON data
+            var allGenres = [];
+            // LOOP through all songs and get genres
+            songData.songs.forEach(function(song) {
+                song.genres.forEach(function(genre) {
+                    if (allGenres.indexOf(genre) === -1) {allGenres.push(genre);}
+                });});
+            
+            allGenres.sort(); // sort alphabetically
+            
+            // make form HTML
+            var formHTML = '<div class="filter-form">';
+            formHTML += '<div class="form-group">';
+            formHTML += '<label for="genre-select">Select Genre:</label>';
+            formHTML += '<select id="genre-select">';
+            formHTML += '<option value="">-- Choose a Genre --</option>';
+            
+            // add genres as options
+            allGenres.forEach(function(genre) {formHTML += '<option value="' + genre + '">' + genre + '</option>';});
+            
+            formHTML += '</select>';
+            formHTML += '<button type="button" id="filter-btn" class="filter-btn">Filter</button>';
+            formHTML += '</div>';
+            formHTML += '</div>';
+            
+            // DISPLAY!
+            $("#filter-section").html(formHTML);
+        }
+
+        function filterSongs() {//get selected genre
+            var selectedGenre = $("#genre-select").val();
+            if (selectedGenre === "") {
+                alert("Please select a genre to filter by.");
+                return;}
+            
+            // get songs that match selected genre
+            var matchingSongs = [];
+            
+            songData.songs.forEach(function(song) {
+                // check song has the selected genre
+                if (song.genres.indexOf(selectedGenre) !== -1) {
+                    matchingSongs.push(song.title);}});
+            
+            // show results
+            displayResults(selectedGenre, matchingSongs);
+        }
+
+        function displayResults(genre, songs) {
+            var resultsHTML = '<h3>Songs in "' + genre + '" genre:</h3>';
+            if (songs.length === 0) {
+                resultsHTML += '<div class="no-results">No songs found for this genre.</div>';
+            } else {
+                songs.forEach(function(title) {resultsHTML += '<div class="song-title">' + title + '</div>';});
+            }
+            // show results section + populate it
+            $("#filtered-songs").html(resultsHTML);
+            $("#results-section").show();}
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+    "songs": [
+        {
+            "title": "DtMF",
+            "artist": "Bad Bunny",
+            "year": 2025,
+            "genres": ["Reggaeton", "Latin Pop"]
+        },
+        {
+            "title": "Such A Simple Thing",
+            "artist": "Ray LaMontagne",
+            "year": 2018,
+            "genres": ["Alternative", "Folk"]
+        },
+        {
+            "title": "Snooze",
+            "artist": "SZA",
+            "year": 2022,
+            "genres": ["R&B"]
+        },
+        {
+            "title": "Her",
+            "artist": "The American Dawn",
+            "year": 2024,
+            "genres": ["Alternative", "Indie"]
+        },
+        {
+            "title": "DESPECHÁ",
+            "artist": "ROSALÍA",
+            "year": 2022,
+            "genres": ["Mambo", "Reggaeton", "Latin Pop"]
+        },
+        {
+            "title": "Love Me JeJe",
+            "artist": "Tems",
+            "year": 2024,
+            "genres": ["Afropop", "R&B"]
+        },
+        {
+            "title": "Ride the Storm",
+            "artist": "GoldFord",
+            "year": 2021,
+            "genres": ["Alternative", "Indie", "Folk"]
+        },
+        {
+            "title": "Fake Plastic Trees",
+            "artist": "Radiohead",
+            "year": 1995,
+            "genres": ["Alternative", "Pop Rock"]
+        }
+    ]
+}
