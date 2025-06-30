@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>F1 Racing Dashboard</title>
+<style>
+    body {font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5;}
+    .container {max-width: 1200px; margin: 0 auto; background-color: white; padding: 30px;
+        border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
+    h1 {text-align: center; color: #e10600; font-size: 32px; margin-bottom: 30px;
+        border-bottom: 3px solid #e10600; padding-bottom: 10px;}
+    .section {margin: 30px 0;}
+    .section h2 {color: #333; font-size: 24px;margin-bottom: 15px; border-left: 4px solid #e10600; padding-left: 15px;}
+    .race-info {background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #e10600;}
+    .race-info h3 {margin: 0 0 10px 0; color: #e10600; font-size: 20px;}
+    .race-details {color: #666; font-size: 14px;}
+    .results-table, .standings-table {width: 100%; border-collapse: collapse; margin-top: 15px;}
+    .results-table th, .standings-table th {background-color: #e10600; color: white; padding: 12px 8px;
+        text-align: left; font-weight: bold;}
+    .results-table td, .standings-table td {padding: 10px 8px; border-bottom: 1px solid #ddd;}
+    .results-table tr:nth-child(even), .standings-table tr:nth-child(even) {background-color: #f8f9fa;}
+    .position {font-weight: bold; color: #e10600; text-align: center; width: 50px;}
+    .driver-name {font-weight: bold; color: #333;}
+    .team-name {color: #666; font-size: 14px;}
+    .points {font-weight: bold; text-align: center; color: #e10600;}
+    .podium {background-color: #fff3cd !important;}
+    .winner {background-color: #d4edda !important;}
+    .loading {text-align: center;font-size: 18px; color: #666; padding: 40px;}
+    .error {background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px;
+        border-radius: 5px; margin: 20px 0;}
+    .two-column {display: flex; gap: 30px; flex-wrap: wrap;}
+    .column {flex: 1; min-width: 500px;}
+    .wins {color: #28a745; font-weight: bold;}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏎️ Formula 1 Racing Dashboard</h1>
+        <div class="section">
+            <h2>Latest Race Results</h2>
+            <div id="race-results" class="loading">Loading latest race results...</div>
+        </div>
+        <div class="section">
+            <h2>2025 Driver Championship Standings</h2>
+            <div id="driver-standings" class="loading">Loading championship standings...</div>
+        </div>
+    </div>
+    <script>
+        // get both datasets when page loads:
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRaceResults();
+            loadDriverStandings();});
+
+        function loadRaceResults() {
+            fetch('https://f1api.dev/api/current/last/race')
+                .then(response => response.json())
+                .then(data => {
+                    displayRaceResults(data);
+                })
+                .catch(error => {
+                    console.log('Error loading race results:', error);
+                    document.getElementById('race-results').innerHTML = 
+                        '<div class="error">Error loading race results. Please try again later.</div>';
+                });
+        }
+
+        function loadDriverStandings() {
+            fetch('https://f1api.dev/api/2025/drivers-championship')
+                .then(response => response.json())
+                .then(data => {displayDriverStandings(data);})
+                .catch(error => {
+                    console.log('Error loading driver standings:', error);
+                    document.getElementById('driver-standings').innerHTML = 
+                        '<div class="error">Error loading driver standings. Please try again later.</div>';
+                });
+        }
+
+        function displayRaceResults(data) {
+            const race = data.races;
+            const results = race.results;
+            // date formatting!
+            const raceDate = new Date(race.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'});
+
+            let html = '<div class="race-info">';
+            html += '<h3>' + race.raceName + '</h3>';
+            html += '<div class="race-details">';
+            html += '<strong>Date:</strong> ' + raceDate + '<br>';
+            html += '<strong>Circuit:</strong> ' + race.circuit.circuitName + ', ' + race.circuit.country + '<br>';
+            html += '<strong>Round:</strong> ' + race.round + ' of 2025 Season';
+            html += '</div>';
+            html += '</div>';
+
+            // table of results
+            html += '<table class="results-table">';
+            html += '<thead><tr>';
+            html += '<th>Pos</th><th>Driver</th><th>Team</th><th>Time/Status</th><th>Points</th>';
+            html += '</tr></thead><tbody>';
+
+            results.forEach(function(result) {
+                let rowClass = '';
+                if (result.position === 1) rowClass = 'winner';
+                else if (result.position <= 3 && result.position !== 'NC') rowClass = 'podium';
+
+                html += '<tr class="' + rowClass + '">';
+                html += '<td class="position">' + result.position + '</td>';
+                html += '<td class="driver-name">' + result.driver.name + ' ' + result.driver.surname + '</td>';
+                html += '<td class="team-name">' + result.team.teamName + '</td>';
+                html += '<td>' + result.time + '</td>';
+                html += '<td class="points">' + result.points + '</td>';
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            document.getElementById('race-results').innerHTML = html;
+        }
+
+        function displayDriverStandings(data) {
+            const standings = data.drivers_championship;
+            let html = '<table class="standings-table">';
+            html += '<thead><tr>';
+            html += '<th>Pos</th><th>Driver</th><th>Team</th><th>Points</th><th>Wins</th>';
+            html += '</tr></thead><tbody>';
+
+            standings.forEach(function(driver) {
+                let rowClass = '';
+                if (driver.position === 1) rowClass = 'winner';
+                else if (driver.position <= 3) rowClass = 'podium';
+
+                const wins = driver.wins || 0;
+
+                html += '<tr class="' + rowClass + '">';
+                html += '<td class="position">' + driver.position + '</td>';
+                html += '<td class="driver-name">' + driver.driver.name + ' ' + driver.driver.surname + '</td>';
+                html += '<td class="team-name">' + driver.team.teamName + '</td>';
+                html += '<td class="points">' + driver.points + '</td>';
+                html += '<td class="wins">' + wins + '</td>';
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            document.getElementById('driver-standings').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
