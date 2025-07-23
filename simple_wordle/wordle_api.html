@@ -318,7 +318,7 @@
             document.getElementById('submitBtn').onclick = () => game.submitGuess();
             document.getElementById('restartBtn').onclick = () => game.startGame();
             
-            // make sure input is valid (though I'm not checking if something if something is s real word or proper noun . . . don't have a full dictionary)
+            // make sure input is valid (though I'm not checking if something is a real word or proper noun . . . don't have a full dictionary)
             document.getElementById('guessInput').addEventListener('input', function(e) {e.target.value = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase();});
             
             // Enter key support
