@@ -321,7 +321,7 @@
             // make sure input is valid (though I'm not checking if something is a real word or proper noun . . . don't have a full dictionary)
             document.getElementById('guessInput').addEventListener('input', function(e) {e.target.value = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase();});
             
-            // Enter key support
+            // etner key 
             document.getElementById('guessInput').addEventListener('keypress', async function(e) {if (e.key === 'Enter') {await game.submitGuess();}});
         };
     </script>
